@@ -30,7 +30,7 @@ class Triangle
   end 
 
   def scalene?
-    return @length1 != @length2 && @length3 && @length2 != @length3 && @length1 && @length3 != @length1 && @length2
+    return @length1 != @length2 && @length2 != @length3 && @length3 != @length1 
   end 
 
   def isosceles?
