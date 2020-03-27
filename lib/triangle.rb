@@ -10,11 +10,11 @@ class Triangle
 
   def kind
     if equilateral?
-      inequality_check(:equilateral)
+      return inequality_check(:equilateral)
     elsif isosceles?
-      inequality_check(:isosceles)
+      return inequality_check(:isosceles)
     else
-      inequality_check(:scalene)
+      return inequality_check(:scalene)
     end
   end
   
@@ -23,7 +23,7 @@ class Triangle
   end 
 
   def isosceles?
-    side1 == side2 || side2 == side3 || side3 == side1
+    return side1 == side2 || side2 == side3 || side3 == side1
   end 
 
   def inequality_check(triangle_type)
