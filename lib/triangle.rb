@@ -15,7 +15,7 @@ class Triangle
     return @length1 + @length2 <= @length3 || @length1 + @length3 <= @length2 || @length2 + @length3 < @length1    
   end
 
-  def inequality_error?
+  def inequality?
     if triangle_size_zero? 
       return true
     elsif sum_of_sides?
@@ -37,25 +37,21 @@ class Triangle
     return @length1 != @length2 || @length2 != @length3 || @length3 != @length1
   end 
 
+  def inequality_check(triangle_type)
+    if inequality?
+      raise TriangleError
+    else
+      return triangle_type
+    end 
+  end 
+
   def kind
     if equilateral?
-      if inequality_error?
-        raise TriangleError
-      else
-        return :equilateral
-      end 
+      inequality_check(:equilateral)
     elsif scalene?
-      if inequality_error?
-        raise TriangleError
-      else 
-        return :scalene
-      end 
+      inequality_check(:scalene)
     elsif isosceles?
-      if inequality_error?
-        raise TriangleError
-      else
-        return :isosceles
-      end 
+      inequality_check(:isosceles)
     end
   end
 
