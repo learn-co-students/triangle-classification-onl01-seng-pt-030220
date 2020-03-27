@@ -35,9 +35,7 @@ class Triangle
   end 
 
   def inequality?
-    if triangle_size_zero? 
-      return true
-    elsif sum_of_sides?
+    if triangle_size_zero? || sum_of_sides?
       return true
     else
       return false
