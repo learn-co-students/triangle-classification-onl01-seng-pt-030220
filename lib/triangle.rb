@@ -1,19 +1,38 @@
 class Triangle
 
+  attr_accessor :side1, :side2, :side3
   
-  def initialize(length1, length2, length3)
-    @length1 = length1
-    @length2 = length2
-    @length3 = length3
+  def initialize(side1, side2, side3)
+    @side1 = side1
+    @side2 = side2
+    @side3 = side3
   end
 
-  def triangle_size_zero?
-    return ((@length1 - @length2) - @length3) == 0 
+  def kind
+    if equilateral?
+      inequality_check(:equilateral)
+    elsif isosceles?
+      inequality_check(:isosceles)
+    else
+      inequality_check(:scalene)
+    end
+  end
+  
+  def equilateral?
+    return side1 == side2 && side2 == side3
   end 
 
-  def sum_of_sides?
-    return @length1 + @length2 <= @length3 || @length1 + @length3 <= @length2 || @length2 + @length3 < @length1    
-  end
+  def isosceles?
+    side1 == side2 || side2 == side3 || side3 == side1
+  end 
+
+  def inequality_check(triangle_type)
+    if inequality?
+      raise TriangleError
+    else
+      return triangle_type
+    end 
+  end 
 
   def inequality?
     if triangle_size_zero? 
@@ -25,34 +44,14 @@ class Triangle
     end 
   end 
 
-  def equilateral?
-    return @length1 == @length2 && @length2 == @length3
+  def triangle_size_zero?
+    return ((side1 - side2) - side3) == 0 
   end 
 
-  def scalene?
-    return @length1 != @length2 && @length2 != @length3 && @length3 != @length1 
-  end 
-
-  def isosceles?
-    return @length1 != @length2 || @length2 != @length3 || @length3 != @length1
-  end 
-
-  def inequality_check(triangle_type)
-    if inequality?
-      raise TriangleError
-    else
-      return triangle_type
-    end 
-  end 
-
-  def kind
-    if equilateral?
-      inequality_check(:equilateral)
-    elsif scalene?
-      inequality_check(:scalene)
-    elsif isosceles?
-      inequality_check(:isosceles)
-    end
+  def sum_of_sides?
+    return side1 + side2 <= side3 || 
+           side1 + side3 <= side2 || 
+           side2 + side3 <= side1    
   end
 
   class TriangleError < StandardError
