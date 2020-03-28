@@ -1,6 +1,7 @@
 class Triangle
+  class InvalidTriangleError < StandardError; end
   
-  attr_accessor :a, :b, :c
+  attr_reader :a, :b, :c
 
   def initialize(a, b, c)
     @a = a
@@ -9,29 +10,34 @@ class Triangle
   end
 
   def kind
-    if valid? && @a == @b && @b == @c
-      :equilateral
-    elsif @a == @b || @a == @c || @b == @c
-      :isosceles
-    else
-      :scalene
-    end
+    return :equilateral if equilateral?
+    return :isosceles if isosceles?
+    
+    :scalene
   end
 
   def valid?  
-    if 
-      @a <= 0 || @b <= 0 || @c <= 0
-        raise TriangleError
-    elsif
-      (@a + @b <= c) || (@a + @c <= @b) || (@b + @c <= @a)
-      raise TriangleError
-    else
-      return true
-    end
+    raise InvalidTriangleError if any_side_less_than_zero?
+    raise InvalidTriangleError if sum_of_two_sides_less_than_third?
+
+    true
   end
 
+  private
 
-  class TriangleError < StandardError
+  def equilateral?
+    valid? && a == b && b == c
   end
 
+  def isosceles?
+    a == b || a == c || b == c
+  end
+
+  def any_side_less_than_zero?
+    a <= 0 || b <= 0 || c <= 0
+  end
+
+  def sum_of_two_sides_less_than_third?
+    (a + b <= c) || (a + c <= b) || (b + c <= a)
+  end
 end
