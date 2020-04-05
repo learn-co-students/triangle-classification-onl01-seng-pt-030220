@@ -18,7 +18,7 @@ class Triangle
         :scalene
       end
     else
-      raise TriangleError
+        raise TriangleError
     end
   end
 
